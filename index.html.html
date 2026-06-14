@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ How Well Do You Really Know Me?</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #fff3f9 0%, #f1e4fc 100%);
+    padding: 60px 20px;
+    color: #2c1a3a;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* Header Grid Layout matching image */
+.header-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.title-section {
+    text-align: left;
+}
+
+.issue-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #cca4db;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.title-section h1 {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #21132e;
+}
+
+.title-section h1 span {
+    color: #9b51e0;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.subtitle {
+    color: #7d6f85;
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 480px;
+}
+
+/* Glassmorphic Badge Side Card */
+.info-card {
+    background: linear-gradient(135deg, #ffaec9 0%, #dcaaff 100%);
+    border-radius: 32px;
+    padding: 40px;
+    color: white;
+    box-shadow: 0 20px 40px rgba(220, 170, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card .heart-icon {
+    background: #000;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.info-card h2 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: left;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+}
+
+.info-card p {
+    font-size: 15px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.tags-row {
+    display: flex;
+    gap: 10px;
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    backdrop-filter: blur(5px);
+}
+
+/* Progress Tracker Text Line */
+.tracker-bar {
+    border-bottom: 1px solid #e8daee;
+    padding-bottom: 15px;
+    margin-bottom: 40px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #bfa1cb;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Quiz Grid */
+#quiz {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.question-card {
+    background: white;
+    padding: 40px;
+    border-radius: 32px;
+    box-shadow: 0 10px 35px rgba(166, 115, 203, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.question-card:hover {
+    transform: translateY(-5px);
+}
+
+.question-card h3 {
+    font-size: 22px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: #21132e;
+    display: flex;
+    align-items: flex-start;
+}
+
+.question-card h3 .q-num {
+    color: #e2cbf2;
+    margin-right: 15px;
+    font-weight: 700;
+}
+
+/* Custom Option Labels with letter prefixes */
+label {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    margin-bottom: 14px;
+    background: #fff;
+    border: 1px solid #f0e6f5;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4a3b57;
+    position: relative;
+}
+
+label:hover {
+    border-color: #dcbaff;
+    background: #fbf7ff;
+}
+
+/* Hide native radio button */
+label input[type=radio] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Custom Letter Circle */
+.option-prefix {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f7f0fc;
+    color: #a38ba8;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+label:hover .option-prefix {
+    background: #ebd9fa;
+    color: #8a4fc4;
+}
+
+/* Selected state styling overlay */
+label:has(input[type=radio]:checked) {
+    border-color: #ba8cff;
+    background: #faf4ff;
+}
+label:has(input[type=radio]:checked) .option-prefix {
+    background: #ba8cff;
+    color: white;
+}
+
+/* Answer verification colors */
+.correct {
+    background: #e1fae9 !important;
+    border: 2px solid #27c25d !important;
+    color: #125225 !important;
+}
+.correct .option-prefix {
+    background: #27c25d !important;
+    color: white !important;
+}
+
+.wrong {
+    background: #ffebeb !important;
+    border: 2px solid #ff5c5c !important;
+    color: #611818 !important;
+}
+.wrong .option-prefix {
+    background: #ff5c5c !important;
+    color: white !important;
+}
+
+/* Interactive CTA Action Elements */
+.action-wrapper {
+    text-align: center;
+    margin: 60px 0;
+}
+
+button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 50px;
+    border: none;
+    border-radius: 100px;
+    background: linear-gradient(135deg, #fcaed3, #cfa0fe);
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 12px 35px rgba(220, 160, 254, 0.4);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(220, 160, 254, 0.5);
+}
+
+/* Styling specifically for the LOCKED/DISABLED state */
+button:disabled {
+    background: #e2dae6;
+    color: #a395ad;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.action-note {
+    font-size: 12px;
+    color: #a395ad;
+    margin-top: 15px;
+}
+
+footer {
+    text-align: center;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #cca4db;
+    margin-top: 60px;
+    font-weight: 600;
+}
+
+/* Scoring Results Display Panel */
+#result {
+    margin-top: 40px;
+}
+
+.score-box {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 32px;
+    box-shadow: 0 15px 40px rgba(166, 115, 203, 0.08);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.score-box h1 {
+    font-size: 56px;
+    color: #21132e;
+}
+
+.progress {
+    height: 14px;
+    background: #f0e6f5;
+    border-radius: 50px;
+    overflow: hidden;
+    margin: 25px 0;
+}
+
+.bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ff9ebb, #c38fff);
+    border-radius: 50px;
+    width: 0%;
+    transition: width 1s cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+/* Responsive Overrides */
+@media(max-width: 900px){
+    .header-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    #quiz {
+        grid-template-columns: 1fr;
+    }
+    .title-section h1 {
+        font-size: 46px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header-grid">
+        <div class="title-section">
+            <div class="issue-tag">Issue N° 01 • Love Edition</div>
+            <h1>How well do you<br><span>really</span><br>know me?</h1>
+            <p class="subtitle">A tiny quiz, a soft test of intuition. Answer honestly — no peeking — and find out the temperature of your love compatibility.</p>
+        </div>
+         
+        <div class="info-card">
+            <div class="heart-icon">❤️</div>
+            <h2>18 questions.<br>One little verdict.</h2>
+            <p>Let's find out right now</p>
+            <div class="tags-row">
+                <div class="tag">~ 5 min</div>
+                <div class="tag">no signup</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tracker-bar"><span id="answered-count">0</span> / 18 Answered</div>
+
+    <div id="quiz"></div>
+
+    <div class="action-wrapper">
+        <button id="submit-btn" onclick="checkAnswers()" disabled>
+            ❤️ Reveal my score ❤️
+        </button>
+        <p class="action-note">Answer every question to unlock your verdict.</p>
+    </div>
+
+    <div id="result"></div>
+
+    <footer>Made with ❤️ - A Little Love Quiz</footer>
+
+</div>
+
+<script>
+// Plugs in your exact 18 questions database smoothly
+const questions = [
+    {
+        q: "Which is my favorite Kerala food? 🍛",
+        name: "q1",
+        correct: "Biriyani",
+        options: ["Biriyani", "Porotta & Beef", "Kappa & Meen Curry", "Puttu & Kadala"]
+    },
+    {
+        q: "Which place do I love visiting again the most? 🌍",
+        name: "q2",
+        correct: "Wayanad",
+        options: ["Wayanad", "Kochi", "Calicut", "None"]
+    },
+    {
+        q: "Which Malayalam actor do I like the most? 🎬",
+        name: "q3",
+        correct: "Nivin Pauly",
+        options: ["Nivin Pauly", "Dulquer Salmaan", "Fahadh Faasil", "Tovino Thomas"]
+    },
+    {
+        q: "Which IPL team do I support? 🏏",
+        name: "q4",
+        correct: "CSK",
+        options: ["RCB", "CSK", "MI", "KKR"]
+    },
+    {
+        q: "What is my favorite evening snack? ☕",
+        name: "q5",
+        correct: "Pazhampori",
+        options: ["Pazhampori", "Samosa", "Unnakkaya", "Parippu Vada"]
+    },
+    {
+        q: "Which place would I choose for a trip? ✈️",
+        name: "q6",
+        correct: "Manali",
+        options: ["Manali", "Varanasi", "Wayanad", "Kochi"]
+    },
+    {
+        q: "Which Malayalam song reminds me of you? 🎵",
+        name: "q7",
+        correct: "Aaro Nenjil",
+        options: ["Aaro Nenjil", "Amsham", "Chirithottu", "Maayajaalam"]
+    },
+    {
+        q: "What is my usual order at a cafe? 🍔",
+        name: "q8",
+        correct: "Loaded Fries",
+        options: ["Pazhampori", "Loaded Fries", "Shawarma", "Burger"]
+    },
+    {
+        q: "What is my favourite dress color? 👕",
+        name: "q9",
+        correct: "Black",
+        options: ["White", "Black", "Blue", "Red"]
+    },
+    {
+        q: "Which celebrity actor did we see when we first met? 🌟",
+        name: "q10",
+        correct: "Sharafudheen",
+        options: ["Unni Mukundan", "Sharafudheen", "Mathew Thomas", "Sagar Surya"]
+    },
+    {
+        q: "Which movie do I always talk about with you? 🎥",
+        name: "q11",
+        correct: "Premam",
+        options: ["Thallumaala", "Premam", "Arya 2", "Chandrolsavam"]
+    },
+    {
+        q: "Who is my favourite Tamil actor? 🔥",
+        name: "q12",
+        correct: "Vijay",
+        options: ["Suriya", "Vijay", "Ajith", "Sivakarthikeyan"]
+    },
+    {
+        q: "Which Malayalam movie genre do I love? 🎞️",
+        name: "q13",
+        correct: "Comedy",
+        options: ["Comedy", "Thriller", "Romance", "Action"]
+    },
+    {
+        q: "What's my favorite cuddle position? ❤️",
+        name: "q14",
+        correct: "Spooning",
+        options: ["Spooning", "Hugging", "Head on lap", "Holding hands"]
+    },
+    {
+        q: "Which feature of yours do I love the most? 😘",
+        name: "q15",
+        correct: "Boobs",
+        options: ["Boobs", "Pumpkin", "Sandwitch", "Lip"]
+    },
+    {
+        q: "After Sex, how long do I take rest? 😴",
+        name: "q16",
+        correct: "1 Hour",
+        options: ["1 Hour", "2 Hours", "Full Day", "10 Minutes"]
+    },
+    {
+        q: "What's my favorite sex position to do together? 💕",
+        name: "q17",
+        correct: "Missionary",
+        options: ["Doggy", "Missionary", "Top of me", "others"]
+    },
+    {
+        q: "What nickname do I call you most often? ❤️",
+        name: "q18",
+        correct: "Smrithiii",
+        options: ["Baby", "Kutta", "Mowl", "Smrithiii"]
+    }
+];
+
+const quiz = document.getElementById("quiz");
+const prefixes = ["A", "B", "C", "D"];
+
+// Render styled question card layers dynamically
+questions.forEach((item, index) => {
+    let questionNum = String(index + 1).padStart(2, '0');
+     
+    let optionsHTML = item.options.map((option, optIdx) => `
+        <label>
+            <input type="radio" name="${item.name}" value="${option}" onchange="updateTracker()">
+            <span class="option-prefix">${prefixes[optIdx]}</span>
+            ${option}
+        </label>
+    `).join("");
+
+    quiz.innerHTML += `
+        <div class="question-card">
+            <h3><span class="q-num">${questionNum}</span> ${item.q}</h3>
+            ${optionsHTML}
+        </div>
+    `;
+});
+
+// Updates structural selection tracker counts live and handles locking/unlocking button
+function updateTracker() {
+    let checkedCount = 0;
+    questions.forEach(item => {
+        if(document.querySelector(`input[name="${item.name}"]:checked`)) {
+            checkedCount++;
+        }
+    });
+    document.getElementById("answered-count").innerText = checkedCount;
+
+    // Turn off disabled state only when all questions are answered
+    const submitBtn = document.getElementById("submit-btn");
+    if (checkedCount === questions.length) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+}
+
+function checkAnswers() {
+    let score = 0;
+
+    questions.forEach(item => {
+        let radios = document.querySelectorAll(`input[name="${item.name}"]`);
+        radios.forEach(r => {
+            let parentLabel = r.parentElement;
+            parentLabel.classList.remove("correct", "wrong");
+
+            if (r.value === item.correct) {
+                parentLabel.classList.add("correct");
+            }
+            if (r.checked && r.value !== item.correct) {
+                parentLabel.classList.add("wrong");
+            }
+            if (r.checked && r.value === item.correct) {
+                score++;
+            }
+        });
+    });
+
+    let percent = Math.round((score / questions.length) * 100);
+    let msg = "";
+
+    if (percent == 100) msg = "💖 Soulmates Forever 💖";
+    else if (percent >= 85) msg = "😍 Perfect Match";
+    else if (percent >= 70) msg = "❤️ True Love";
+    else if (percent >= 50) msg = "😊 Good Chemistry";
+    else msg = "😂 Need More Dates";
+
+    document.getElementById("result").innerHTML = `
+        <div class="score-box">
+            <h1>${percent}% ❤️</h1>
+            <h2>${score}/${questions.length} Correct</h2>
+            <div class="progress">
+                <div class="bar" style="width: ${percent}%"></div>
+            </div>
+            <h2>${msg}</h2>
+        </div>
+    `;
+     
+    document.getElementById("result").scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
